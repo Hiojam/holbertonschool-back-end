@@ -4,8 +4,8 @@ This script fetches exports information to Json
 Usage: python script_name.py employee_id
 """
 
-import requests
 import json
+import requests
 import sys
 
 
