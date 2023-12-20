@@ -4,8 +4,8 @@ This script fetches exports information to Json
 Usage: python script_name.py employee_id
 """
 
-import requests
 import json
+import requests
 
 
 def export_tasks():
@@ -18,7 +18,7 @@ def export_tasks():
     for task in tasks:
         user_id = task['userId']
         task_info = {
-            "username": task['title'],
+            "username": task['username'],
             "task": task['title'],
             "completed": task['completed']
         }
