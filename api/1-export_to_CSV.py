@@ -22,15 +22,15 @@ def export_to_csv(employee_id):
         for task in todos:
             completed_status = "True" if task['completed'] else "False"
             output_rows.append([
-                employee_info['id'],
-                employee_info['name'],
-                completed_status,
-                task['title']
+                f'{employee_info["id"]}',
+                f'{employee_info["name"]}',
+                f'{completed_status}',
+                f'{task["title"]}'
             ])
 
         file_name = f"{employee_info['id']}.csv"
         with open(file_name, 'w', newline='', encoding='utf-8') as file:
-            csv_writer = csv.writer(file)
+            csv_writer = csv.writer(file, quoting=csv.QUOTE_ALL)
             csv_writer.writerows(output_rows)
 
         print(f"Data exported to {file_name}")
