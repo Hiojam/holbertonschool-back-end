@@ -1,5 +1,11 @@
+#!/usr/bin/python3
 import requests
 import sys
+
+"""
+This script fetches information about an employee's TODO list progress.
+Usage: python script_name.py employee_id
+"""
 
 def get_employee_todo_progress(employee_id):
     base_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}'
