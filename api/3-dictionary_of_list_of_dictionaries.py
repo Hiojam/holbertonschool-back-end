@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This script fetches exports information to Json
+This script fetches returns information about a user TODO list
 Usage: python script_name.py employee_id
 """
 
@@ -8,37 +8,35 @@ import json
 import requests
 
 
-def export_tasks():
+def export_tasks(employee):
     # Fetching data from the API
-    response = requests.get('https://jsonplaceholder.typicode.com/todos')
+    response = requests.get(
+        f'https://jsonplaceholder.typicode.com/todos?userId={employee["id"]}'
+        )
     tasks = response.json()
 
-    # Creating a dictionary to store tasks for each user
-    all_tasks = {}
+    # Creating an array to store tasks for each user
+    all_tasks = []
     for task in tasks:
-        user_id = task['userId']
         task_info = {
-            "username": task['username'],
+            "username": employee['username'],
             "task": task['title'],
             "completed": task['completed']
         }
-        # Checking if the user_id key exists in the dictionary
-        # If it exists, append the task_info to the existing list
-        if user_id in all_tasks:
-            all_tasks[user_id].append(task_info)
-        else:
-            all_tasks[user_id] = [task_info]
 
-    # Exporting tasks to JSON files for each user
-    for user_id, user_tasks in all_tasks.items():
-        filename = f"{user_id}.json"
-        with open(filename, 'w') as file:
-            json.dump(user_tasks, file, indent=2)
+        all_tasks.append(task_info)
 
-    # Exporting all tasks to a single JSON file
-    with open('todo_all_employees.json', 'w') as file:
-        json.dump(all_tasks, file)
+    return all_tasks
 
 
 if __name__ == "__main__":
-    export_tasks()
+    base_url = 'https://jsonplaceholder.typicode.com'
+    users = requests.get(f'{base_url}/users/').json()
+
+    json_data = {}
+    for employee in users:
+        json_data[f"{employee['id']}"] = export_tasks(employee)
+
+    # Exporting all tasks to a single JSON file
+    with open('todo_all_employees.json', 'w') as file:
+        json.dump(json_data, file, indent=2)
