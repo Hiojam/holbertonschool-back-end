@@ -23,7 +23,7 @@ def export_to_csv(employee_id):
             completed_status = "True" if task['completed'] else "False"
             output_rows.append([
                 f'{employee_info["id"]}',
-                f'{employee_info["name"]}',
+                f'{employee_info["username"]}',
                 f'{completed_status}',
                 f'{task["title"]}'
             ])
