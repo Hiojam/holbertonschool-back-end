@@ -21,19 +21,21 @@ def get_employee_todo_progress(employee_id):
         completed_tasks = [
             task['title'] for task in todos if task['completed']
             ]
-        total_tasks = len(completed_tasks) + len(todos) - len(completed_tasks)
+        total_tasks = len(todos)
 
         # Display progress
-        print(
+        output = [
             f"Employee {employee_info['name']} is done with tasks"
             f"({len(completed_tasks)}/{total_tasks}):"
-            )
+        ]
 
         for task in completed_tasks:
-            print(f"\t {task}")
+            output.append(f"\t {task}")
+
+        return "\n".join(output)
 
     except requests.RequestException as e:
-        print("Error fetching data:", e)
+        return f"Error: {e}"
 
 
 if __name__ == "__main__":
@@ -42,4 +44,4 @@ if __name__ == "__main__":
         sys.exit(1)
 
     employee_id = int(sys.argv[1])
-    get_employee_todo_progress(employee_id)
+    print(get_employee_todo_progress(employee_id))
